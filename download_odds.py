@@ -22,6 +22,7 @@ def backfill_odds_data(startweek,endweek):
         url = "http://www.footballlocks.com/nfl_odds_week_" + str(week) + ".shtml"
         f = urllib.urlopen(url)
         html_code = f.read()
+        #following line fixes all the broken HTML i've come across so far on the website
         html_code = html_code.replace("</D>","</TD>").replace('size=-1','').replace('SIZE=-1','')
         f.close()
         row_dicts = read_historical_tables_from_html(html_code)
@@ -332,9 +333,6 @@ def _add_week_num_to_dicts(row_dicts,week_num):
 
 
 def read_tables_from_html(html_code):
-    #DEPRECATED
-    #uses regex to parse 
-    #table_re = r"<table>.*</table>"
     tab_start_loc = html_code.find('<TABLE COLS="6"')
     end_table_loc = html_code[tab_start_loc+1:].find("</TABLE>")
     first_table = html_code[tab_start_loc:tab_start_loc+end_table_loc+9] #9 is the length of the table txt itself
@@ -393,7 +391,6 @@ def read_tables_from_html(html_code):
     return enrich_row_dicts(row_dicts)
 
 def read_current_odds(address = CURRENT_ODDS_URL,use_logit = False):
-    #DEPRECATED
     f = urllib.urlopen(address)
     #f = urllib.urlopen("http://www.footballlocks.com/nfl_odds.shtml")
     html_code = f.read()
