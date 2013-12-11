@@ -1,0 +1,5 @@
+run download_odds.py to generate weekly picks using the basic method
+run download_odds.py --logit to generate weekly picks using the fit from the logistic model
+run weekly_update.py after a weeks games have completed, include MNF, to upload all the latest data into the database
+the sqlite database is not in the repo, but it can be regenerated using download_odds.py --backfill, downloading the win loss csv data, 
+running merge_win_and_bet_data.py, and then running add_games_database from database_utils.py with the appropriate merged data file
